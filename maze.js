@@ -36,14 +36,16 @@ class Maze {
   }
   //3. shows the shortest route between starting point and destination 
   drawMaze(){
-    for(let r=0; r < this.row; r++){
+    for(let r=0; r < this.row; r++)
+    {
       this.rows[r] = new Row(r,this);
 
     }
     this.pickHeadTail(); //now pick head and tail
      //work to detect success path, this can be done in different ways
 //          this.routeStyle();
-    if (!this.solved){
+    if (!this.solved)
+    {
       if(this.cbs){
         console.log("Drawing a maze now");
         maze = new Maze(this.row,this.col,true);
@@ -79,7 +81,8 @@ class Maze {
 
     console.log(this.steps++);
 //      console.log("cell in call", cell);
-    if(this.steps > this.row*this.col){ //this to minimize an overstack error possiblity 
+    if(this.steps > this.row*this.col)
+    { //this to minimize an overstack error possiblity 
       console.log("exceeded our intentions");
       return false;
     }
@@ -97,7 +100,8 @@ class Maze {
 
     this.visited.push(cell);
 
-    let bottom_cell = this.cells.find(cell_=> cell_.row === (cell.row+1) && cell_.col === (cell.col)); //indicates an available bottom route
+    let bottom_cell = this.cells.find(cell_=> cell_.row === (cell.row+1) 
+                                      && cell_.col === (cell.col)); //indicates an available bottom route
     let visited_bottom_cell = this.visited.find(cell_ => cell_ === bottom_cell); //indicates a visited bottom route
 
     let left_cell = this.cells.find(cell_=> cell_.row === cell.row && cell_.col === (cell.col-1));
@@ -108,41 +112,54 @@ class Maze {
     let visited_top_cell = this.visited.find(cell_ => cell_ === top_cell);
 
     
-    if (cell.style !== "bottom" &&  bottom_cell && bottom_cell.col === cell.col && visited_bottom_cell === undefined && this.drawRoute(bottom_cell)) { 
+    if (cell.style !== "bottom" &&  bottom_cell && bottom_cell.col === cell.col 
+        && visited_bottom_cell === undefined && this.drawRoute(bottom_cell)) 
+    { 
       this.route.push(cell);
 //        console.log("cell is not bottom:", cell);
 //       console.log("and we checked on ", bottom_cell);
       return true;
     }    
 
-    if(cell.col >= this.tail.col ){ //this check here helps in finding a shorter path to tail. Smarter vs Faster, your call :)
-      if (left_cell && left_cell.style !== "right" && cell.style !== "left" ){ 
-        if (visited_left_cell === undefined && this.drawRoute(left_cell) ) { 
+    if(cell.col >= this.tail.col )
+    { //this check here helps in finding a shorter path to tail. Smarter vs Faster, your call :)
+      if (left_cell && left_cell.style !== "right" && cell.style !== "left" )
+      { 
+        if (visited_left_cell === undefined && this.drawRoute(left_cell) ) 
+        { 
           this.route.push(cell); 
 //          console.log("cell is not left:", cell);
 //          console.log("and we checked on ", left_cell);
           return true;
         }
       }
-      if ( right_cell && right_cell.style !== "left" && cell.style !== "right"){ 
-        if (visited_right_cell === undefined && this.drawRoute(right_cell)) {
+      if ( right_cell && right_cell.style !== "left" && cell.style !== "right")
+      { 
+        if (visited_right_cell === undefined && this.drawRoute(right_cell)) 
+        {
           this.route.push(cell);
 //          console.log("cell is not right:", cell);
 //          console.log("and we checked on ", right_cell);
           return true;
         }
       }
-     }else{
-      if (right_cell && right_cell.style !== "left" && cell.style !== "right"){ 
-        if (visited_right_cell === undefined && this.drawRoute(right_cell)) {
+     }
+     else
+     {
+      if (right_cell && right_cell.style !== "left" && cell.style !== "right")
+      { 
+        if (visited_right_cell === undefined && this.drawRoute(right_cell)) 
+        {
           this.route.push(cell);
 //          console.log("cell is not right:", cell);
 //          console.log("and we checked on ", right_cell);
           return true;
         }
       }
-      if (left_cell && left_cell.style !== "right" && cell.style !== "left"){ 
-        if (visited_left_cell === undefined && this.drawRoute( left_cell)) { 
+      if (left_cell && left_cell.style !== "right" && cell.style !== "left")
+      { 
+        if (visited_left_cell === undefined && this.drawRoute( left_cell)) 
+        { 
           this.route.push(cell); 
 //          console.log("cell is not left:", cell);
 //          console.log("and we checked on ", left_cell);
@@ -151,7 +168,9 @@ class Maze {
       }
      }
 
-    if (top_cell && top_cell.style !== "bottom" && visited_top_cell === undefined && this.drawRoute(top_cell)) { 
+    if (top_cell && top_cell.style !== "bottom" && visited_top_cell === undefined 
+        && this.drawRoute(top_cell)) 
+    { 
       this.route.push(cell);
 //      console.log("cell is not bottom:", cell);
 //      console.log("and we checked on ", top_cell );
@@ -160,7 +179,8 @@ class Maze {
     return false;
   }
 
-  routeStyle(){
+  routeStyle()
+  {
     for(let i=0; i<this.route.length; i++)
     {
       this.route[i].html("route "+i.toString());
@@ -168,13 +188,16 @@ class Maze {
   }
   html(name) {
     let table = document.getElementById("maze");
-    if(!table){
+    if(!table)
+    {
       table = document.createElement("table");
       table.id = "maze";
-      if(document && document.body){
+      if(document && document.body)
+      {
        document.body.appendChild(table); 
       }
-      else{
+      else
+      {
        alert("Make sure to run maze.js inside an html page, with a present body tag");
       }
     }
@@ -196,7 +219,8 @@ class Row {
 
   html() {
     let row = document.getElementById("row_"+this.row.toString());
-    if(!row){
+    if(!row)
+    {
       row = document.createElement("tr");
       row.id = "row_"+this.row.toString();
       this.maze.html().appendChild(row);
@@ -206,7 +230,8 @@ class Row {
 
   createCells(){
     //we want our head/start cell to be in 0 row, but a random cell
-    for(let c=0; c < this.maze.col; c++){
+    for(let c=0; c < this.maze.col; c++)
+    {
       let cell = new Cell(this.row, c);
       this.cells.push({col:cell.col,row:cell.row});
       this.maze.cells.push(cell);
@@ -229,17 +254,21 @@ class Cell {
 
   html(style) {
     let cell = document.getElementById("cell_"+this.row+"."+this.col );
-    if(!cell){
+    if(!cell)
+    {
       cell = document.createElement("td");
       cell.id = "cell_"+this.row+"."+this.col;
-      if(!style){
+      if(!style)
+      {
         cell.className =  this.style;
       }
-      else {
+      else 
+      {
         cell.className = cell.className + " " + style;
       }
     }
-    if(style){
+    if(style)
+    {
       cell.className =  cell.className + " " + style;
     }
     return cell;
